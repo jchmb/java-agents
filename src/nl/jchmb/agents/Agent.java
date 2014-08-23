@@ -4,9 +4,9 @@ import nl.jchmb.agents.actuator.Actuator;
 import nl.jchmb.agents.cognizer.Cognizer;
 import nl.jchmb.agents.percept.Percept;
 
-public interface Agent {
+public interface Agent<T extends Agent<T>> {
 	public void onStep();
-	public <Perception> Perception perceive(Percept<Perception> percept);
-	public <Feedback> Feedback act(Actuator<Feedback> actuator);
-	public <Perception, Cognition> Cognition cognize(Cognizer<Perception, Cognition> cognizer);
+	public <Perception> Perception perceive(Percept<T, Perception> percept);
+	public <Feedback> Feedback act(Actuator<T, Feedback> actuator);
+	public <Perception, Cognition> Cognition cognize(Cognizer<T, Perception, Cognition> cognizer, Perception perception);
 }

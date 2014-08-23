@@ -2,6 +2,6 @@ package nl.jchmb.agents.percept;
 
 import nl.jchmb.agents.Agent;
 
-public interface Percept<Perception> {
-	public Perception perceive(Agent agent);
+public interface Percept<T extends Agent, Perception> {
+	public Perception perceive(T agent);
 }
