@@ -1,43 +1,37 @@
 package nl.jchmb.agents;
 
 import nl.jchmb.agents.actuator.Actuator;
-import nl.jchmb.agents.alarm.Alarm;
 import nl.jchmb.agents.cognizer.Cognizer;
 import nl.jchmb.agents.percept.Percept;
-import nl.jchmb.utils.event.Trigger;
+import nl.jchmb.utils.alarm.AlarmManager;
+import nl.jchmb.utils.alarm.DefaultAlarmManager;
 
-public class DefaultAgent implements Agent<DefaultAgent> {
+public class DefaultAgent implements Agent {
+	private AlarmManager alarmManager;
+	
+	public DefaultAgent() {
+		alarmManager = new DefaultAlarmManager();
+	}
+	
 	@Override
 	public void onStep() {
-		
+		alarmManager.tryTrigger();
 	}
 
 	@Override
 	public <Perception> Perception perceive(
-			Percept<DefaultAgent, Perception> percept) {
+			Percept<Perception> percept) {
 		return percept.perceive(this);
 	}
 
 	@Override
-	public <Feedback> Feedback act(Actuator<DefaultAgent, Feedback> actuator) {
+	public <Feedback> Feedback act(Actuator<Feedback> actuator) {
 		return actuator.act(this);
 	}
 
 	@Override
 	public <Perception, Cognition> Cognition cognize(
-			Cognizer<DefaultAgent, Perception, Cognition> cognizer, Perception perception) {
+			Cognizer<Perception, Cognition> cognizer, Perception perception) {
 		return cognizer.cognize(this, perception);
-	}
-
-	@Override
-	public void addAlarm(Alarm alarm) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addTrigger(Trigger<?> trigger) {
-		// TODO Auto-generated method stub
-		
 	}
 }
