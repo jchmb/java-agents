@@ -6,11 +6,11 @@ public class Main {
 	public static void main(String[] args) {
 		DefaultAgent agent = new DefaultAgent();
 		
-		RandomPercept<DefaultAgent> percept = new RandomPercept<DefaultAgent>();
+		RandomPercept percept = new RandomPercept();
 		Integer perception = percept.perceive(agent);
-		StringifierCognizer<DefaultAgent> cognizer = new StringifierCognizer<DefaultAgent>();
+		StringifierCognizer cognizer = new StringifierCognizer();
 		String message = cognizer.cognize(agent, perception);
-		PrintActuator<DefaultAgent> actuator = new PrintActuator<DefaultAgent>(message);
+		PrintActuator actuator = new PrintActuator(message);
 		agent.act(actuator);
 	}
 }

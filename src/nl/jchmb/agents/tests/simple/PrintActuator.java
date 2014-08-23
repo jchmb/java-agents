@@ -3,7 +3,7 @@ package nl.jchmb.agents.tests.simple;
 import nl.jchmb.agents.Agent;
 import nl.jchmb.agents.actuator.Actuator;
 
-public class PrintActuator<T extends Agent<T>> implements Actuator<T, Void> {
+public class PrintActuator implements Actuator<Void> {
 	private String message;
 	
 	public PrintActuator(String message) {
@@ -11,7 +11,7 @@ public class PrintActuator<T extends Agent<T>> implements Actuator<T, Void> {
 	}
 	
 	@Override
-	public Void act(T agent) {
+	public <T extends Agent> Void act(T agent) {
 		System.out.println(message);
 		return null;
 	}

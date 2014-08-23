@@ -5,9 +5,9 @@ import java.util.Random;
 import nl.jchmb.agents.Agent;
 import nl.jchmb.agents.percept.Percept;
 
-public class RandomPercept<T extends Agent<T>> implements Percept<T, Integer> {
+public class RandomPercept implements Percept<Integer> {
 	@Override
-	public Integer perceive(T agent) {
+	public <T extends Agent> Integer perceive(T agent) {
 		return new Random().nextInt();
 	}
 }
