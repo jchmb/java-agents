@@ -1,16 +1,19 @@
 package nl.jchmb.agents;
 
-import nl.jchmb.agents.actuator.Actuator;
-import nl.jchmb.agents.cognizer.Cognizer;
-import nl.jchmb.agents.percept.Percept;
+import nl.jchmb.agents.action.AgentAction;
+import nl.jchmb.agents.query.AgentQuery;
+import nl.jchmb.agents.service.AgentServiceProvider;
+import nl.jchmb.agents.service.DefaultAgentServiceProvider;
 import nl.jchmb.utils.alarm.AlarmManager;
 import nl.jchmb.utils.alarm.DefaultAlarmManager;
 
 public class DefaultAgent implements Agent {
 	private AlarmManager alarmManager;
+	private AgentServiceProvider serviceProvider;
 	
 	public DefaultAgent() {
 		alarmManager = new DefaultAlarmManager();
+		serviceProvider = new DefaultAgentServiceProvider();
 	}
 	
 	@Override
@@ -19,19 +22,17 @@ public class DefaultAgent implements Agent {
 	}
 
 	@Override
-	public <Perception> Perception perceive(
-			Percept<Perception> percept) {
-		return percept.perceive(this);
+	public void performAction(AgentAction action) {
+		action.execute(this);
 	}
 
 	@Override
-	public <Feedback> Feedback act(Actuator<Feedback> actuator) {
-		return actuator.act(this);
+	public <V> V performQuery(AgentQuery<V> query) {
+		return query.execute(this);
 	}
 
 	@Override
-	public <Perception, Cognition> Cognition cognize(
-			Cognizer<Perception, Cognition> cognizer, Perception perception) {
-		return cognizer.cognize(this, perception);
+	public Object getService(String serviceName) {
+		return serviceProvider.getService(serviceName);
 	}
 }
