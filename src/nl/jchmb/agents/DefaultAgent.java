@@ -19,7 +19,7 @@ public class DefaultAgent<T extends Agent<T>> implements Agent<T> {
 		Response<T, ?> response;
 		for (Association<T, ? extends Response<T, ?>> association : associations) {
 			response = association.associate(stimulus);
-			response.perform((T) this, stimulus);
+			response.perform((T) this, stimulus); 
 		}
 	}
 
