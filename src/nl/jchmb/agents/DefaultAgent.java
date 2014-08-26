@@ -1,37 +1,32 @@
 package nl.jchmb.agents;
 
-import nl.jchmb.agents.actuator.Actuator;
-import nl.jchmb.agents.cognizer.Cognizer;
-import nl.jchmb.agents.percept.Percept;
-import nl.jchmb.utils.alarm.AlarmManager;
-import nl.jchmb.utils.alarm.DefaultAlarmManager;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class DefaultAgent implements Agent {
-	private AlarmManager alarmManager;
+import nl.jchmb.agents.association.Association;
+import nl.jchmb.agents.response.Response;
+import nl.jchmb.agents.stimulus.Stimulus;
+
+public class DefaultAgent<T extends Agent<T>> implements Agent<T> {
+	private Collection<Association<T, ? extends Response<T, ?>>> associations;
 	
 	public DefaultAgent() {
-		alarmManager = new DefaultAlarmManager();
-	}
-	
-	@Override
-	public void onStep() {
-		alarmManager.tryTrigger();
+		associations = new ArrayList<Association<T, ? extends Response<T, ?>>>();
 	}
 
 	@Override
-	public <Perception> Perception perceive(
-			Percept<Perception> percept) {
-		return percept.perceive(this);
+	public <S extends Stimulus> void stimulate(S stimulus) {
+		Response<T, ?> response;
+		for (Association<T, ? extends Response<T, ?>> association : associations) {
+			response = association.associate(stimulus);
+			response.perform((T) this, stimulus);
+		}
 	}
 
 	@Override
-	public <Feedback> Feedback act(Actuator<Feedback> actuator) {
-		return actuator.act(this);
-	}
-
-	@Override
-	public <Perception, Cognition> Cognition cognize(
-			Cognizer<Perception, Cognition> cognizer, Perception perception) {
-		return cognizer.cognize(this, perception);
+	public <R extends Response<T, ?>> void addAssociation(
+			Association<T, R> association) {
+		// TODO Auto-generated method stub
+		
 	}
 }
