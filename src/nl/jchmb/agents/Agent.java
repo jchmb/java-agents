@@ -4,6 +4,11 @@ import nl.jchmb.agents.action.AgentAction;
 import nl.jchmb.agents.query.AgentQuery;
 import nl.jchmb.agents.universe.Universe;
 
+/**
+ * Generic Agent interface.
+ * 
+ * @author jchmb
+ */
 public interface Agent {
 	public void onStep();
 	public void onAttach();
